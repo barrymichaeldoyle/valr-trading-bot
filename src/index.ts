@@ -1,12 +1,13 @@
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 // Load env variables before any other imports
 dotenv.config();
 
+import chalk from 'chalk';
+
 import { SpotTradingBot } from './bots/SpotTradingBot';
 import { ACCOUNTS } from './config/accounts';
-import { logger, logHelp } from './utils/logger';
-import chalk from 'chalk';
 import { BOT_CONFIG } from './config/botConfig';
+import { logger, logHelp } from './utils/logger';
 
 interface BotManager {
   spot?: SpotTradingBot;
@@ -20,14 +21,14 @@ async function main() {
   // Auto-start configured bots
   async function startConfiguredBots() {
     logger.system('Starting configured bots...');
-    
+
     if (BOT_CONFIG.autoStart.spot) {
       logger.system('Auto-starting spot trading bot...');
       bots.spot = new SpotTradingBot(ACCOUNTS.spot);
       await bots.spot.start();
       logger.success('Spot trading bot auto-started');
     }
-    
+
     // Add other bot types here as we create them
   }
 
@@ -44,7 +45,7 @@ async function main() {
   process.stdin.on('data', async (data) => {
     const [command, botType] = data.toString().trim().toLowerCase().split(' ');
 
-    switch(command) {
+    switch (command) {
       case 'start':
         if (botType === 'spot') {
           if (!bots.spot) {
@@ -107,7 +108,7 @@ async function main() {
 }
 
 // Update the main execution error handler
-main().catch(error => {
+main().catch((error) => {
   logger.error(`Fatal error: ${error.message}`);
   process.exit(1);
 });

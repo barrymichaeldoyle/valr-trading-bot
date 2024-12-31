@@ -9,8 +9,8 @@ export class SpotTradingBot implements Bot {
 
   constructor(account: Account) {
     this.valrService = new ValrService(account);
-    
-    this.valrService.on('trade', (trade) => {
+
+    this.valrService.on("trade", (trade) => {
       if (this.running) {
         this.handleTradeEvent(trade);
       }
@@ -19,24 +19,24 @@ export class SpotTradingBot implements Bot {
 
   async start(): Promise<void> {
     if (this.running) {
-      logger.bot('SPOT', 'Bot is already running');
+      logger.bot("SPOT", "Bot is already running");
       return;
     }
 
-    logger.bot('SPOT', 'Starting...');
+    logger.bot("SPOT", "Starting...");
     await this.valrService.connect();
     this.running = true;
   }
 
   async stop(): Promise<void> {
     if (!this.running) {
-      logger.bot('SPOT', 'Bot is not running');
+      logger.bot("SPOT", "Bot is not running");
       return;
     }
 
-    logger.bot('SPOT', 'Stopping...');
+    logger.bot("SPOT", "Stopping...");
     this.running = false;
-    this.valrService.removeAllListeners('trade');
+    this.valrService.removeAllListeners("trade");
     await this.valrService.disconnect();
   }
 
@@ -52,12 +52,13 @@ export class SpotTradingBot implements Bot {
     const { profitMargin, quantityPrecision, pricePrecision } = pairConfig;
 
     const counterSide = side === "buy" ? "sell" : "buy";
-    const rawCounterPrice = side === "buy"
-      ? parseFloat(price) * (1 + profitMargin)
-      : parseFloat(price) * (1 - profitMargin);
+    const rawCounterPrice =
+      side === "buy"
+        ? parseFloat(price) * (1 + profitMargin)
+        : parseFloat(price) * (1 - profitMargin);
 
     logger.trade(
-      side.toUpperCase() as 'BUY' | 'SELL',
+      side.toUpperCase() as "BUY" | "SELL",
       parseFloat(quantity),
       currencyPair,
       parseFloat(price)
@@ -73,7 +74,9 @@ export class SpotTradingBot implements Bot {
       );
       logger.success(`Counter order placed successfully for ${currencyPair}`);
     } catch (error) {
-      logger.error(`Error placing counter order: ${error instanceof Error ? error.message : String(error)}`);
+      logger.error(
+        `Error placing counter order: ${error instanceof Error ? error.message : String(error)}`
+      );
     }
   }
 
