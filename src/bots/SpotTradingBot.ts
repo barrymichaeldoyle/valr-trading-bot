@@ -1,7 +1,7 @@
-import { PAIRS } from "../config/pairs";
-import { ValrService } from "../services/ValrService";
-import type { Account, Bot } from "../types";
-import { logger } from "../utils/logger";
+import { PAIRS } from '../config/pairs';
+import { ValrService } from '../services/ValrService';
+import type { Account, Bot } from '../types';
+import { logger } from '../utils/logger';
 
 export class SpotTradingBot implements Bot {
   private running: boolean = false;
@@ -10,7 +10,7 @@ export class SpotTradingBot implements Bot {
   constructor(account: Account) {
     this.valrService = new ValrService(account);
 
-    this.valrService.on("trade", (trade) => {
+    this.valrService.on('trade', (trade) => {
       if (this.running) {
         this.handleTradeEvent(trade);
       }
@@ -19,24 +19,24 @@ export class SpotTradingBot implements Bot {
 
   async start(): Promise<void> {
     if (this.running) {
-      logger.bot("SPOT", "Bot is already running");
+      logger.bot('SPOT', 'Bot is already running');
       return;
     }
 
-    logger.bot("SPOT", "Starting...");
+    logger.bot('SPOT', 'Starting...');
     await this.valrService.connect();
     this.running = true;
   }
 
   async stop(): Promise<void> {
     if (!this.running) {
-      logger.bot("SPOT", "Bot is not running");
+      logger.bot('SPOT', 'Bot is not running');
       return;
     }
 
-    logger.bot("SPOT", "Stopping...");
+    logger.bot('SPOT', 'Stopping...');
     this.running = false;
-    this.valrService.removeAllListeners("trade");
+    this.valrService.removeAllListeners('trade');
     await this.valrService.disconnect();
   }
 
@@ -49,16 +49,21 @@ export class SpotTradingBot implements Bot {
       return;
     }
 
+    if (!pairConfig.enabled) {
+      logger.bot('SPOT', `Skipping disabled pair: ${currencyPair}`);
+      return;
+    }
+
     const { profitMargin, quantityPrecision, pricePrecision } = pairConfig;
 
-    const counterSide = side === "buy" ? "sell" : "buy";
+    const counterSide = side === 'buy' ? 'sell' : 'buy';
     const rawCounterPrice =
-      side === "buy"
+      side === 'buy'
         ? parseFloat(price) * (1 + profitMargin)
         : parseFloat(price) * (1 - profitMargin);
 
     logger.trade(
-      side.toUpperCase() as "BUY" | "SELL",
+      side.toUpperCase() as 'BUY' | 'SELL',
       parseFloat(quantity),
       currencyPair,
       parseFloat(price)
