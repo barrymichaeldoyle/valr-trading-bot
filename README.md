@@ -18,7 +18,7 @@ A hobby project for automated trading on the VALR cryptocurrency exchange. Built
 
 - Node.js (LTS version recommended)
 - npm
-- A VALR account with API keys (Sign up with referral code [VAVCTUC7](https://www.valr.com/invite/VAVCTUC7) to support this project!)
+- A VALR account with API keys (Sign up with referral code [VAVCTUC7](https://www.valr.com/invite/VAVCTUC7) to support this project and get your own sweet juicy rebates!)
 
 ### Installation
 
