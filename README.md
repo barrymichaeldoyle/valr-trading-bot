@@ -31,8 +31,8 @@ A hobby project for automated trading on the VALR cryptocurrency exchange. Built
 
 By default, the bots will start automatically. Unless you specify otherwise by updating the [bot configuration file](src/config/botConfig.ts).
 
-- `start <bot_type>` - Start specified bot (spot|lending)
-- `stop <bot_type>` - Stop specified bot (spot|lending)
+- `start <bot_type>` - Start specified bot (`spot`|`lending`)
+- `stop <bot_type>` - Stop specified bot (`spot`|`lending`)
 - `status` - Show all bot statuses
 - `help` - Show help message
 - `exit` - Stop all bots and exit
