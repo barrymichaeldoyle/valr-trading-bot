@@ -62,6 +62,8 @@ export class SpotTradingBot implements Bot {
         ? parseFloat(price) * (1 + profitMargin)
         : parseFloat(price) * (1 - profitMargin);
 
+    const formattedPrice = rawCounterPrice.toFixed(pricePrecision);
+
     logger.trade(
       side.toUpperCase() as 'BUY' | 'SELL',
       parseFloat(quantity),
@@ -70,14 +72,13 @@ export class SpotTradingBot implements Bot {
     );
 
     try {
-      const result = await this.valrService.placeOrder(
+      await this.valrService.placeOrder(
         this.valrService.getAccount(),
         currencyPair,
         counterSide,
-        rawCounterPrice.toString(),
+        formattedPrice,
         quantity
       );
-      logger.success(`Counter order placed successfully for ${currencyPair}`);
     } catch (error) {
       logger.error(
         `Error placing counter order: ${error instanceof Error ? error.message : String(error)}`

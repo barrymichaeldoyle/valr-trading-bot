@@ -7,7 +7,7 @@ A hobby project for automated trading on the VALR cryptocurrency exchange. Built
 ## Features
 
 - 📈 Spot Trading Bot
-- 💰 Lending Bot (coming soon)
+- 💰 Earn Bot (for automatic reinvesting of lending and staking profits)
 - 🖥️ Simple CLI interface
 - 📝 Detailed logging
 - ⚡ Real-time WebSocket connection
@@ -31,8 +31,25 @@ A hobby project for automated trading on the VALR cryptocurrency exchange. Built
 
 By default, the bots will start automatically. Unless you specify otherwise by updating the [bot configuration file](src/config/botConfig.ts).
 
-- `start <bot_type>` - Start specified bot (`spot`|`lending`)
-- `stop <bot_type>` - Stop specified bot (`spot`|`lending`)
+- `start <bot_type>` - Start specified bot (`spot`|`earn`)
+- `stop <bot_type>` - Stop specified bot (`spot`|`earn`)
 - `status` - Show all bot statuses
 - `help` - Show help message
 - `exit` - Stop all bots and exit
+
+## Bot Types
+
+- `spot` - Spot trading bot
+- `earn` - Earn bot
+
+### Spot Trading Bot
+
+The spot trading bot is a simple market maker bot that trades on the spot market.
+
+It works by listening for new orders on the market and placing a counter-order to buy at a slightly higher price or sell at a slightly lower price depending on your configured profit margin.
+
+### Earn Bot
+
+The earn bot is a bot that automatically reinvests your earnings from staking and lending.
+
+It currently only works if you have existing positions in the staking or lending products.

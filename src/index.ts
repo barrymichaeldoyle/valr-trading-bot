@@ -4,6 +4,7 @@ dotenv.config();
 
 import chalk from 'chalk';
 
+import { EarnBot } from './bots/EarnBot';
 import { SpotTradingBot } from './bots/SpotTradingBot';
 import { ACCOUNTS } from './config/accounts';
 import { BOT_CONFIG } from './config/botConfig';
@@ -11,8 +12,8 @@ import { logger, logHelp } from './utils/logger';
 
 interface BotManager {
   spot?: SpotTradingBot;
+  earn?: EarnBot;
   // Add other bot types here as we create them
-  // lending?: LendingBot;
 }
 
 async function main() {
