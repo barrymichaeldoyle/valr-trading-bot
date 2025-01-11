@@ -11,7 +11,7 @@ export const PAIRS: TradingPair[] = [
   {
     symbol: 'ETHUSDC',
     profitMargin: 0.001,
-    quantityPrecision: 6,
+    quantityPrecision: 8,
     pricePrecision: 2,
     enabled: true,
   },

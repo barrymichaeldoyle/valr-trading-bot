@@ -54,7 +54,7 @@ export class SpotTradingBot implements Bot {
       return;
     }
 
-    const { profitMargin, quantityPrecision, pricePrecision } = pairConfig;
+    const { profitMargin, pricePrecision } = pairConfig;
 
     const counterSide = side === 'buy' ? 'sell' : 'buy';
     const rawCounterPrice =
